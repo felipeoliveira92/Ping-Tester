@@ -1,0 +1,11 @@
+C:\Users\felipe rabelo\Documents\Projetos\PingTester\bin\Debug\PingTester.exe.config
+C:\Users\felipe rabelo\Documents\Projetos\PingTester\bin\Debug\PingTester.exe
+C:\Users\felipe rabelo\Documents\Projetos\PingTester\bin\Debug\PingTester.pdb
+C:\Users\felipe rabelo\Documents\Projetos\PingTester\obj\Debug\PingTester.csprojAssemblyReference.cache
+C:\Users\felipe rabelo\Documents\Projetos\PingTester\obj\Debug\PingTester.Form1.resources
+C:\Users\felipe rabelo\Documents\Projetos\PingTester\obj\Debug\PingTester.Properties.Resources.resources
+C:\Users\felipe rabelo\Documents\Projetos\PingTester\obj\Debug\PingTester.csproj.GenerateResource.cache
+C:\Users\felipe rabelo\Documents\Projetos\PingTester\obj\Debug\PingTester.exe
+C:\Users\felipe rabelo\Documents\Projetos\PingTester\obj\Debug\PingTester.pdb
+C:\Users\felipe rabelo\Documents\Projetos\PingTester\bin\Debug\BDPing.mdf
+C:\Users\felipe rabelo\Documents\Projetos\PingTester\bin\Debug\BDPing_log.ldf

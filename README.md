@@ -1,2 +1,2 @@
 # Ping Tester
- Monitor de Pings
+ Monitor de IPs

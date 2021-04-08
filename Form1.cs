@@ -45,15 +45,15 @@ namespace PingTester
             Thread thread = new Thread(executaPing);
             thread.Start();
 
-            buttonStart.Enabled = false;
-            buttonStop.Enabled = true;
+            buttonStart.Visible = false;
+            buttonStop.Visible = true;
         }
 
         private void executaPing()
         {
             int i = 0;
 
-            while (buttonStart.Enabled == false)
+            while (buttonStart.Visible == false)
             {
                 //MessageBox.Show(dataGridView1.Rows[i].Cells[0].Value.ToString());
                 Ping ping = new Ping();
@@ -61,11 +61,30 @@ namespace PingTester
 
                 if (pingReply.Status == IPStatus.Success)
                 {
+                    //dataGridView1.Rows[i].Cells[1].Value = pingReply.Status;
+                    dataGridView1.Rows[i].Cells[1].Value = "ONLINE";
+                    dataGridView1.Rows[i].DefaultCellStyle.BackColor = Color.FromArgb(50, 205, 50);
+                    dataGridView1.Rows[i].DefaultCellStyle.ForeColor = Color.FromArgb(255, 255, 255);
+                }
+                else if(pingReply.Status == IPStatus.TimedOut)
+                {
                     dataGridView1.Rows[i].Cells[1].Value = pingReply.Status;
+                    dataGridView1.Rows[i].DefaultCellStyle.ForeColor = Color.FromArgb(255, 255, 255);
+                    dataGridView1.Rows[i].DefaultCellStyle.BackColor = Color.FromArgb(253, 191, 0);
+                }
+                else if (pingReply.Status == IPStatus.DestinationHostUnreachable)
+                {
+                    dataGridView1.Rows[i].Cells[1].Value = pingReply.Status;
+                    dataGridView1.Rows[i].Cells[1].Value = "Inacessível";
+                    dataGridView1.Rows[i].DefaultCellStyle.ForeColor = Color.FromArgb(255, 255, 255);
+                    dataGridView1.Rows[i].DefaultCellStyle.BackColor = Color.FromArgb(211, 211, 211);
                 }
                 else
                 {
                     dataGridView1.Rows[i].Cells[1].Value = pingReply.Status;
+                    dataGridView1.Rows[i].DefaultCellStyle.ForeColor = Color.FromArgb(255, 255, 255);
+                    dataGridView1.Rows[i].DefaultCellStyle.BackColor = Color.FromArgb(255, 105, 180);
+
                 }
 
                 i++;
@@ -75,11 +94,21 @@ namespace PingTester
                     i = 0;
                 }
             }
+            if(buttonStart.Visible == false)
+            {
+                for (int j = 0; i < dataGridView1.Rows.Count; i++)
+                {
+                    dataGridView1.Rows[j].Cells[1].Value = "OFFLINE";
+                    dataGridView1.Rows[j].DefaultCellStyle.ForeColor = Color.FromArgb(255, 255, 255);
+                    dataGridView1.Rows[j].DefaultCellStyle.BackColor = Color.FromArgb(255, 0, 0);
+                }
+            }
         }
 
         private void Form1_Load(object sender, EventArgs e)
         {
             atualizaDataGrid();
+            textBoxIPAdress.Focus();
         }
 
         private void buttonAdicionar_Click(object sender, EventArgs e)
@@ -90,23 +119,25 @@ namespace PingTester
 
             string comando = "INSERT INTO Ips(ip) VALUES (@ip)";
             SqlCommand sqlCommand = new SqlCommand(comando, sqlConnection);
-            sqlCommand.Parameters.AddWithValue("@ip", textBox1.Text);
+            sqlCommand.Parameters.AddWithValue("@ip", textBoxIPAdress.Text);
             sqlCommand.ExecuteNonQuery();
 
             sqlConnection.Close();
 
             atualizaDataGrid();
-            textBox1.Text = "";
+            textBoxIPAdress.Text = "";
         }
 
         private void buttonStop_Click(object sender, EventArgs e)
         {
-            buttonStart.Enabled = true;
-            buttonStop.Enabled = false;
+            buttonStart.Visible = true;
+            buttonStop.Visible = false;
 
             for(int i = 0; i < dataGridView1.Rows.Count; i++)
             {
                 dataGridView1.Rows[i].Cells[1].Value = "OFFLINE";
+                dataGridView1.Rows[i].DefaultCellStyle.ForeColor = Color.FromArgb(255, 255, 255);
+                dataGridView1.Rows[i].DefaultCellStyle.BackColor = Color.FromArgb(255, 0, 0);
             }
         }
 

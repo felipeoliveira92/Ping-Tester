@@ -27,7 +27,7 @@ namespace PingTester.Properties {
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.SpecialSettingAttribute(global::System.Configuration.SpecialSetting.ConnectionString)]
         [global::System.Configuration.DefaultSettingValueAttribute("Data Source=(LocalDB)\\MSSQLLocalDB;AttachDbFilename=\"C:\\Users\\felipe rabelo\\Docum" +
-            "ents\\Projetos\\PingTester\\BDPing.mdf\";Integrated Security=True")]
+            "ents\\Projetos\\PingTester\\Ping-Tester\\BDPing.mdf\";Integrated Security=True")]
         public string BDPing {
             get {
                 return ((string)(this["BDPing"]));

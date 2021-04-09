@@ -28,7 +28,7 @@ namespace PingTester
             SqlConnection sqlConnection = new SqlConnection(conexao);
             sqlConnection.Open();
 
-            string comando = "SELECT ip ADRESS, status STATUS  FROM Ips";
+            string comando = "SELECT name NAME, ip ADRESS, status STATUS  FROM ipList";
             SqlCommand sqlCommand = new SqlCommand(comando, sqlConnection);
             sqlCommand.ExecuteNonQuery();
 
@@ -57,31 +57,31 @@ namespace PingTester
             {
                 //MessageBox.Show(dataGridView1.Rows[i].Cells[0].Value.ToString());
                 Ping ping = new Ping();
-                PingReply pingReply = ping.Send(dataGridView1.Rows[i].Cells[0].Value.ToString());
+                PingReply pingReply = ping.Send(dataGridView1.Rows[i].Cells[1].Value.ToString());
 
                 if (pingReply.Status == IPStatus.Success)
                 {
                     //dataGridView1.Rows[i].Cells[1].Value = pingReply.Status;
-                    dataGridView1.Rows[i].Cells[1].Value = "ONLINE";
+                    dataGridView1.Rows[i].Cells[2].Value = "ONLINE";
                     dataGridView1.Rows[i].DefaultCellStyle.BackColor = Color.FromArgb(50, 205, 50);
                     dataGridView1.Rows[i].DefaultCellStyle.ForeColor = Color.FromArgb(255, 255, 255);
                 }
                 else if(pingReply.Status == IPStatus.TimedOut)
                 {
-                    dataGridView1.Rows[i].Cells[1].Value = pingReply.Status;
+                    dataGridView1.Rows[i].Cells[2].Value = pingReply.Status;
                     dataGridView1.Rows[i].DefaultCellStyle.ForeColor = Color.FromArgb(255, 255, 255);
                     dataGridView1.Rows[i].DefaultCellStyle.BackColor = Color.FromArgb(253, 191, 0);
                 }
                 else if (pingReply.Status == IPStatus.DestinationHostUnreachable)
                 {
-                    dataGridView1.Rows[i].Cells[1].Value = pingReply.Status;
-                    dataGridView1.Rows[i].Cells[1].Value = "Inacessível";
+                    dataGridView1.Rows[i].Cells[2].Value = pingReply.Status;
+                    dataGridView1.Rows[i].Cells[2].Value = "Inacessível";
                     dataGridView1.Rows[i].DefaultCellStyle.ForeColor = Color.FromArgb(255, 255, 255);
                     dataGridView1.Rows[i].DefaultCellStyle.BackColor = Color.FromArgb(211, 211, 211);
                 }
                 else
                 {
-                    dataGridView1.Rows[i].Cells[1].Value = pingReply.Status;
+                    dataGridView1.Rows[i].Cells[2].Value = pingReply.Status;
                     dataGridView1.Rows[i].DefaultCellStyle.ForeColor = Color.FromArgb(255, 255, 255);
                     dataGridView1.Rows[i].DefaultCellStyle.BackColor = Color.FromArgb(255, 105, 180);
 
@@ -98,7 +98,7 @@ namespace PingTester
             {
                 for (int j = 0; i < dataGridView1.Rows.Count; i++)
                 {
-                    dataGridView1.Rows[j].Cells[1].Value = "OFFLINE";
+                    dataGridView1.Rows[j].Cells[2].Value = "OFFLINE";
                     dataGridView1.Rows[j].DefaultCellStyle.ForeColor = Color.FromArgb(255, 255, 255);
                     dataGridView1.Rows[j].DefaultCellStyle.BackColor = Color.FromArgb(255, 0, 0);
                 }
@@ -117,8 +117,9 @@ namespace PingTester
             SqlConnection sqlConnection = new SqlConnection(conexao);
             sqlConnection.Open();
 
-            string comando = "INSERT INTO Ips(ip) VALUES (@ip)";
+            string comando = "INSERT INTO ipList(name, ip) VALUES (@name, @ip)";
             SqlCommand sqlCommand = new SqlCommand(comando, sqlConnection);
+            sqlCommand.Parameters.AddWithValue("@name", textBoxNameIP.Text);
             sqlCommand.Parameters.AddWithValue("@ip", textBoxIPAdress.Text);
             sqlCommand.ExecuteNonQuery();
 
@@ -135,7 +136,7 @@ namespace PingTester
 
             for(int i = 0; i < dataGridView1.Rows.Count; i++)
             {
-                dataGridView1.Rows[i].Cells[1].Value = "OFFLINE";
+                dataGridView1.Rows[i].Cells[2].Value = "OFFLINE";
                 dataGridView1.Rows[i].DefaultCellStyle.ForeColor = Color.FromArgb(255, 255, 255);
                 dataGridView1.Rows[i].DefaultCellStyle.BackColor = Color.FromArgb(255, 0, 0);
             }
@@ -149,7 +150,7 @@ namespace PingTester
 
             string comando = "UPDATE Ips SET ip = @newip WHERE @cellSelected = @id";
             SqlCommand sqlCommand = new SqlCommand(comando, sqlConnection);
-            sqlCommand.Parameters.AddWithValue("@ip", dataGridView1.CurrentRow.Cells[0].Value.ToString());
+            sqlCommand.Parameters.AddWithValue("@ip", dataGridView1.CurrentRow.Cells[1].Value.ToString());
             sqlCommand.ExecuteNonQuery();
 
             sqlConnection.Close();

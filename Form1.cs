@@ -28,7 +28,7 @@ namespace PingTester
             SqlConnection sqlConnection = new SqlConnection(conexao);
             sqlConnection.Open();
 
-            string comando = "SELECT name NAME, ip ADRESS, status STATUS  FROM ipList";
+            string comando = "SELECT Id, name Name, ip ADRESS, status STATUS  FROM ipList";
             SqlCommand sqlCommand = new SqlCommand(comando, sqlConnection);
             sqlCommand.ExecuteNonQuery();
 
@@ -36,6 +36,7 @@ namespace PingTester
             SqlDataAdapter dataAdapter = new SqlDataAdapter(sqlCommand);
             dataAdapter.Fill(dataTable);
             dataGridView1.DataSource = dataTable;
+            dataGridView1.Columns[0].Visible = false;
 
             sqlConnection.Close();
         }
@@ -113,20 +114,43 @@ namespace PingTester
 
         private void buttonAdicionar_Click(object sender, EventArgs e)
         {
-            string conexao = PingTester.Properties.Settings.Default.BDPing;
-            SqlConnection sqlConnection = new SqlConnection(conexao);
-            sqlConnection.Open();
+            if(textBoxNameIP.Text == "" && textBoxIPAdress.Text == "")
+            {
+                MessageBox.Show("Dados Incompletos!!", "Mensagem", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+            else
+            {                
+                string conexao = PingTester.Properties.Settings.Default.BDPing;
+                SqlConnection sqlConnection = new SqlConnection(conexao);
+                sqlConnection.Open();
 
-            string comando = "INSERT INTO ipList(name, ip) VALUES (@name, @ip)";
-            SqlCommand sqlCommand = new SqlCommand(comando, sqlConnection);
-            sqlCommand.Parameters.AddWithValue("@name", textBoxNameIP.Text);
-            sqlCommand.Parameters.AddWithValue("@ip", textBoxIPAdress.Text);
-            sqlCommand.ExecuteNonQuery();
+                string comando = "SELECT ip FROM ipList WHERE ip = @ip";
+                SqlCommand sqlCommand = new SqlCommand(comando, sqlConnection);
+                sqlCommand.Parameters.AddWithValue("@ip", textBoxIPAdress.Text);
 
-            sqlConnection.Close();
+                if(sqlCommand.ExecuteScalar() == null)
+                {
+                    string comando2 = "INSERT INTO ipList(name, ip) VALUES (@name, @ip)";
+                    SqlCommand sqlCommand2 = new SqlCommand(comando2, sqlConnection);
+                    sqlCommand2.Parameters.AddWithValue("@name", textBoxNameIP.Text);
+                    sqlCommand2.Parameters.AddWithValue("@ip", textBoxIPAdress.Text);
+                    sqlCommand2.ExecuteNonQuery();
 
-            atualizaDataGrid();
-            textBoxIPAdress.Text = "";
+                    sqlConnection.Close();
+
+                    atualizaDataGrid();
+
+
+                    labelid.Text = "";
+                    textBoxNameIP.Text = "";
+                    textBoxIPAdress.Text = "";
+                }
+                else
+                {
+                    MessageBox.Show("Ja existe um IP igual a este", "Mensagem", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    sqlConnection.Close();
+                }                
+            }            
         }
 
         private void buttonStop_Click(object sender, EventArgs e)
@@ -148,19 +172,61 @@ namespace PingTester
             SqlConnection sqlConnection = new SqlConnection(conexao);
             sqlConnection.Open();                                   
 
-            string comando = "UPDATE Ips SET ip = @newip WHERE @cellSelected = @id";
+            string comando = "UPDATE ipList SET name = @name, ip = @ip WHERE Id = @id";
             SqlCommand sqlCommand = new SqlCommand(comando, sqlConnection);
-            sqlCommand.Parameters.AddWithValue("@ip", dataGridView1.CurrentRow.Cells[1].Value.ToString());
+            sqlCommand.Parameters.AddWithValue("@Id", labelid.Text);
+            sqlCommand.Parameters.AddWithValue("@name", textBoxNameIP.Text);
+            sqlCommand.Parameters.AddWithValue("@ip", textBoxIPAdress.Text);
+
             sqlCommand.ExecuteNonQuery();
 
             sqlConnection.Close();
 
             atualizaDataGrid();
+
+
+            labelid.Text = "";
+            textBoxNameIP.Text = "";
+            textBoxIPAdress.Text = "";
         }
 
         private void backgroundWorker1_DoWork(object sender, DoWorkEventArgs e)
         {
             
+        }
+
+        private void groupBox1_Enter(object sender, EventArgs e)
+        {
+
+        }
+
+        private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+           labelid.Text = dataGridView1.CurrentRow.Cells[0].Value.ToString();
+           textBoxNameIP.Text = dataGridView1.CurrentRow.Cells[1].Value.ToString();
+           textBoxIPAdress.Text = dataGridView1.CurrentRow.Cells[2].Value.ToString();
+
+        }
+
+        private void buttonDelete_Click(object sender, EventArgs e)
+        {
+            string conexao = PingTester.Properties.Settings.Default.BDPing;
+            SqlConnection sqlConnection = new SqlConnection(conexao);
+            sqlConnection.Open();
+
+            string comando = "DELETE FROM ipList WHERE Id = @id";
+            SqlCommand sqlCommand = new SqlCommand(comando, sqlConnection);
+            sqlCommand.Parameters.AddWithValue("@Id", labelid.Text);
+
+            sqlCommand.ExecuteNonQuery();
+
+            sqlConnection.Close();
+
+            atualizaDataGrid();
+
+            labelid.Text = "";
+            textBoxNameIP.Text = "";
+            textBoxIPAdress.Text = "";
         }
     }
 }

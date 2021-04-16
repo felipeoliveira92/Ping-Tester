@@ -58,31 +58,31 @@ namespace PingTester
             {
                 //MessageBox.Show(dataGridView1.Rows[i].Cells[0].Value.ToString());
                 Ping ping = new Ping();
-                PingReply pingReply = ping.Send(dataGridView1.Rows[i].Cells[1].Value.ToString());
+                PingReply pingReply = ping.Send(dataGridView1.Rows[i].Cells[2].Value.ToString());
 
                 if (pingReply.Status == IPStatus.Success)
                 {
                     //dataGridView1.Rows[i].Cells[1].Value = pingReply.Status;
-                    dataGridView1.Rows[i].Cells[2].Value = "ONLINE";
+                    dataGridView1.Rows[i].Cells[3].Value = "ONLINE";
                     dataGridView1.Rows[i].DefaultCellStyle.BackColor = Color.FromArgb(50, 205, 50);
                     dataGridView1.Rows[i].DefaultCellStyle.ForeColor = Color.FromArgb(255, 255, 255);
                 }
                 else if(pingReply.Status == IPStatus.TimedOut)
                 {
-                    dataGridView1.Rows[i].Cells[2].Value = pingReply.Status;
+                    dataGridView1.Rows[i].Cells[3].Value = pingReply.Status;
                     dataGridView1.Rows[i].DefaultCellStyle.ForeColor = Color.FromArgb(255, 255, 255);
                     dataGridView1.Rows[i].DefaultCellStyle.BackColor = Color.FromArgb(253, 191, 0);
                 }
                 else if (pingReply.Status == IPStatus.DestinationHostUnreachable)
                 {
-                    dataGridView1.Rows[i].Cells[2].Value = pingReply.Status;
-                    dataGridView1.Rows[i].Cells[2].Value = "Inacessível";
+                    dataGridView1.Rows[i].Cells[3].Value = pingReply.Status;
+                    dataGridView1.Rows[i].Cells[3].Value = "Inacessível";
                     dataGridView1.Rows[i].DefaultCellStyle.ForeColor = Color.FromArgb(255, 255, 255);
                     dataGridView1.Rows[i].DefaultCellStyle.BackColor = Color.FromArgb(211, 211, 211);
                 }
                 else
                 {
-                    dataGridView1.Rows[i].Cells[2].Value = pingReply.Status;
+                    dataGridView1.Rows[i].Cells[3].Value = pingReply.Status;
                     dataGridView1.Rows[i].DefaultCellStyle.ForeColor = Color.FromArgb(255, 255, 255);
                     dataGridView1.Rows[i].DefaultCellStyle.BackColor = Color.FromArgb(255, 105, 180);
 
@@ -99,7 +99,7 @@ namespace PingTester
             {
                 for (int j = 0; i < dataGridView1.Rows.Count; i++)
                 {
-                    dataGridView1.Rows[j].Cells[2].Value = "OFFLINE";
+                    dataGridView1.Rows[j].Cells[3].Value = "OFFLINE";
                     dataGridView1.Rows[j].DefaultCellStyle.ForeColor = Color.FromArgb(255, 255, 255);
                     dataGridView1.Rows[j].DefaultCellStyle.BackColor = Color.FromArgb(255, 0, 0);
                 }
@@ -110,6 +110,7 @@ namespace PingTester
         {
             atualizaDataGrid();
             textBoxIPAdress.Focus();
+            textBoxNameIP.Focus();
         }
 
         private void buttonAdicionar_Click(object sender, EventArgs e)
@@ -140,7 +141,6 @@ namespace PingTester
 
                     atualizaDataGrid();
 
-
                     labelid.Text = "";
                     textBoxNameIP.Text = "";
                     textBoxIPAdress.Text = "";
@@ -160,7 +160,7 @@ namespace PingTester
 
             for(int i = 0; i < dataGridView1.Rows.Count; i++)
             {
-                dataGridView1.Rows[i].Cells[2].Value = "OFFLINE";
+                dataGridView1.Rows[i].Cells[3].Value = "OFFLINE";
                 dataGridView1.Rows[i].DefaultCellStyle.ForeColor = Color.FromArgb(255, 255, 255);
                 dataGridView1.Rows[i].DefaultCellStyle.BackColor = Color.FromArgb(255, 0, 0);
             }
@@ -183,7 +183,6 @@ namespace PingTester
             sqlConnection.Close();
 
             atualizaDataGrid();
-
 
             labelid.Text = "";
             textBoxNameIP.Text = "";

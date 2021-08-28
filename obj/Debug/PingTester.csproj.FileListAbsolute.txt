@@ -20,3 +20,15 @@ C:\Users\felipe rabelo\Documents\Projetos\PingTester\Ping-Tester\obj\Debug\PingT
 C:\Users\felipe rabelo\Documents\Projetos\PingTester\Ping-Tester\obj\Debug\PingTester.csproj.GenerateResource.cache
 C:\Users\felipe rabelo\Documents\Projetos\PingTester\Ping-Tester\obj\Debug\PingTester.exe
 C:\Users\felipe rabelo\Documents\Projetos\PingTester\Ping-Tester\obj\Debug\PingTester.pdb
+C:\Users\Felipe\Documents\Projetos\Ping-Tester\bin\Debug\BDPing.mdf
+C:\Users\Felipe\Documents\Projetos\Ping-Tester\bin\Debug\BDPing_log.ldf
+C:\Users\Felipe\Documents\Projetos\Ping-Tester\bin\Debug\PingTester.exe.config
+C:\Users\Felipe\Documents\Projetos\Ping-Tester\bin\Debug\PingTester.exe
+C:\Users\Felipe\Documents\Projetos\Ping-Tester\bin\Debug\PingTester.pdb
+C:\Users\Felipe\Documents\Projetos\Ping-Tester\obj\Debug\PingTester.csproj.AssemblyReference.cache
+C:\Users\Felipe\Documents\Projetos\Ping-Tester\obj\Debug\PingTester.Form1.resources
+C:\Users\Felipe\Documents\Projetos\Ping-Tester\obj\Debug\PingTester.Properties.Resources.resources
+C:\Users\Felipe\Documents\Projetos\Ping-Tester\obj\Debug\PingTester.csproj.GenerateResource.cache
+C:\Users\Felipe\Documents\Projetos\Ping-Tester\obj\Debug\PingTester.csproj.CoreCompileInputs.cache
+C:\Users\Felipe\Documents\Projetos\Ping-Tester\obj\Debug\PingTester.exe
+C:\Users\Felipe\Documents\Projetos\Ping-Tester\obj\Debug\PingTester.pdb

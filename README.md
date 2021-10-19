@@ -1,2 +1,2 @@
 # Ping Tester
- Monitor de IPs
+ Ferramenta para monitoramento de ping de dispositivos
